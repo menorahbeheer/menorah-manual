@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV Ketels — Menorah Klimaatbeheer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e; --paper: #f5f0e8; --accent: #8b4513; --accent-light: #c4763a;
+    --warm-grey: #8a8070; --light-rule: #ddd4c0; --warning: #c0392b;
+    --success: #27ae60; --info: #2980b9; --section-bg: #fffdf7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Source Sans 3', Georgia, serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
+  header { background: var(--ink); color: var(--paper); }
+  .header-inner { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 1.75rem; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
+  .header-eyebrow { font-family: 'Source Code Pro', monospace; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--accent-light); text-transform: uppercase; margin-bottom: 0.5rem; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; }
+  header h1 span { color: var(--accent-light); }
+  .header-back { font-size: 0.8rem; color: #b0a090; text-decoration: none; font-family: 'Source Code Pro', monospace; }
+  .header-back:hover { color: var(--accent-light); }
+  .header-rule { height: 3px; background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 50%, transparent 100%); }
+  nav { background: #252535; border-bottom: 1px solid #333345; position: sticky; top: 0; z-index: 100; }
+  .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; }
+  nav a { color: #c8b8a0; text-decoration: none; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.9rem 1.2rem; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover, nav a.active { color: var(--accent-light); border-bottom-color: var(--accent-light); }
+  main { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+  .page-intro p { font-size: 1rem; line-height: 1.75; color: #3a3020; max-width: 720px; margin-bottom: 2.5rem; }
+  h2.section-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--ink); margin: 2.5rem 0 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--light-rule); display: flex; align-items: center; gap: 0.75rem; }
+  h2.section-title::before { content: ''; display: inline-block; width: 20px; height: 3px; background: var(--accent); flex-shrink: 0; }
+  h3.subsection { font-family: 'Source Sans 3', sans-serif; font-size: 1rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+  p { font-size: 0.95rem; line-height: 1.75; color: #3a3020; margin-bottom: 0.75rem; }
+  .warning-box { background: #fff8f0; border: 1px solid #e8a050; border-left: 4px solid var(--warning); border-radius: 2px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+  .warning-box strong { color: var(--warning); display: block; margin-bottom: 0.4rem; font-size: 0.9rem; }
+  .warning-box p { font-size: 0.88rem; color: #5a3a10; margin-bottom: 0; }
+  .info-box { background: #f0f5ff; border: 1px solid #a0b8e8; border-left: 4px solid var(--info); border-radius: 2px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+  .info-box strong { color: var(--info); display: block; margin-bottom: 0.4rem; font-size: 0.9rem; }
+  .info-box p { font-size: 0.88rem; color: #1a3060; margin-bottom: 0; }
+  .admin-badge { display: inline-block; background: #fde8e8; color: #8b1a1a; font-family: 'Source Code Pro', monospace; font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 2px; vertical-align: middle; margin-left: 0.5rem; }
+
+  /* KETEL CARDS */
+  .ketels-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin: 1.5rem 0; }
+  .ketel-card { background: var(--section-bg); border: 1px solid var(--light-rule); border-radius: 3px; padding: 1.25rem; }
+  .ketel-card h3 { font-family: 'Playfair Display', serif; font-size: 1rem; margin-bottom: 0.75rem; color: var(--ink); }
+  .ketel-spec { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid var(--light-rule); font-size: 0.82rem; }
+  .ketel-spec:last-child { border-bottom: none; }
+  .ketel-spec .label { color: var(--warm-grey); }
+  .ketel-spec .value { font-family: 'Source Code Pro', monospace; font-weight: 600; font-size: 0.78rem; }
+
+  /* PARAM TABLE */
+  .param-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.83rem; }
+  .param-table th { background: var(--ink); color: var(--paper); text-align: left; padding: 0.6rem 1rem; font-family: 'Source Code Pro', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; }
+  .param-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--light-rule); vertical-align: top; color: #3a3020; line-height: 1.5; }
+  .param-table tr:nth-child(even) td { background: #faf7f0; }
+  .param-table tr:last-child td { border-bottom: none; }
+  .param-type { font-family: 'Source Code Pro', monospace; font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 2px; }
+  .type-input { background: #e8eef8; color: #1a3a6b; }
+  .type-output { background: #e8f4e8; color: #1a4a1a; }
+
+
+  /* SCREENSHOTS */
+  .screenshot-block { margin: 1.5rem 0; border: 1px solid var(--light-rule); border-radius: 3px; overflow: hidden; max-width:1000px; }
+  .screenshot-block img { width: 100%; display: block; }
+  .screenshot-caption { background: var(--ink); color: #c8b8a0; font-family: 'Source Code Pro', monospace; font-size: 0.72rem; padding: 0.5rem 1rem; letter-spacing: 0.03em; }
+  footer { background: var(--ink); color: #b0a090; text-align: center; padding: 2rem; font-size: 0.88rem; font-family: 'Source Code Pro', monospace; margin-top: 4rem; }
+  footer a { color: var(--accent-light); text-decoration: none; }
+
+  @media (max-width: 768px) { .ketels-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-eyebrow">Hoofdstuk 04</div>
+      <h1>CV <span>Ketels</span></h1>
+    </div>
+    <a href="index.html" class="header-back">← Terug naar overzicht</a>
+  </div>
+  <div class="header-rule"></div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html">Home</a>
+    <a href="systeem.html">Systeem</a>
+    <a href="portaal.html">Portaal</a>
+    <a href="klokken.html">Klokken</a>
+    <a href="cv_ketels.html" class="active">CV Ketels</a>
+    <a href="ruimtes.html">Ruimtes</a>
+    <a href="io.html">I/O</a>
+    <a href="alarmen.html">Alarmen</a>
+    <a href="dataplotter.html">Dataplotter</a>
+    <a href="ontwikkelomgeving.html">Ontwikkelomgeving</a>
+    <a href="verbeteringen.html">Verbeteringen</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="page-intro">
+    <p>Het CV Ketels scherm geeft een real-time overzicht van alle vier ketels. De statuspagina is voor iedereen zichtbaar; de configuratieschermen zijn uitsluitend toegankelijk voor admins.</p>
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠ Configuratie uitsluitend voor admins</strong>
+    <p>Alle parameters op de configuratieschermen (Stooklijn, Ruimte Temperatuur, Mengklep/Pomp/CV Druk) zijn uitsluitend te wijzigen na inloggen als admin. Verkeerde instellingen kunnen de werking van de installatie ernstig verstoren. Raadpleeg bij twijfel altijd Van Niel Installatietechniek.</p>
+  </div>
+
+  <!-- KETEL OVERZICHT -->
+  <h2 class="section-title">Overzicht ketels</h2>
+
+  <div class="ketels-grid">
+    <div class="ketel-card">
+      <h3>Ketel 1 — Grote Zaal</h3>
+      <div class="ketel-spec"><span class="label">Locatie</span><span class="value">Kelder</span></div>
+      <div class="ketel-spec"><span class="label">Bedient</span><span class="value">Grote Zaal</span></div>
+      <div class="ketel-spec"><span class="label">Tab portaal</span><span class="value">Ketels Achterzijde</span></div>
+      <div class="ketel-spec"><span class="label">Config tab</span><span class="value">Config Grote Zaal</span></div>
+    </div>
+    <div class="ketel-card">
+      <h3>Ketel 2 — Voorzijde 2e Verdieping</h3>
+      <div class="ketel-spec"><span class="label">Locatie</span><span class="value">2e verdieping voorzijde</span></div>
+      <div class="ketel-spec"><span class="label">Bedient</span><span class="value">Bovenzaal, hal boven/beneden, toiletten boven/beneden</span></div>
+      <div class="ketel-spec"><span class="label">Tab portaal</span><span class="value">Ketels Voorzijde</span></div>
+      <div class="ketel-spec"><span class="label">Config tab</span><span class="value">Config Ket2 Voor</span></div>
+    </div>
+    <div class="ketel-card">
+      <h3>Ketel 3 — Kantoor Bestuur</h3>
+      <div class="ketel-spec"><span class="label">Locatie</span><span class="value">Kantoor Bestuur, 1e verdieping</span></div>
+      <div class="ketel-spec"><span class="label">Bedient</span><span class="value">Beide kantoren, kinderruimten voor, toiletten en hal achterbouw</span></div>
+      <div class="ketel-spec"><span class="label">Tab portaal</span><span class="value">Ketels Voorzijde</span></div>
+      <div class="ketel-spec"><span class="label">Config tab</span><span class="value">Config Ket3 Bestuur</span></div>
+    </div>
+    <div class="ketel-card">
+      <h3>Ketel 4 — Achterzijde</h3>
+      <div class="ketel-spec"><span class="label">Locatie</span><span class="value">Kelder (staat verkeerd op plattegrond)</span></div>
+      <div class="ketel-spec"><span class="label">Bedient</span><span class="value">Jeugdzolder en kinderruimten achter</span></div>
+      <div class="ketel-spec"><span class="label">Tab portaal</span><span class="value">Ketels Achterzijde</span></div>
+      <div class="ketel-spec"><span class="label">Config tab</span><span class="value">Config Ket4 Achter</span></div>
+    </div>
+  </div>
+
+  <!-- STATUS LEZEN -->
+  <h2 class="section-title">Statusoverzicht lezen</h2>
+
+  <div class="screenshot-block">
+    <img src="screenshots/cv_ketels_voorzijde.png" alt="CV Ketels statusoverzicht voorzijde" onerror="this.parentElement.innerHTML='<div style=\'background:#f0ece4;border:2px dashed #c8bfac;border-radius:3px;padding:2rem;text-align:center;color:#8a8070;font-size:0.82rem;font-family:monospace;margin:1.5rem 0;\'>📷 screenshots/cv_ketels_voorzijde.png — nog toe te voegen</div>'">
+    <div class="screenshot-caption">CV Ketels statusoverzicht — Ketel 2 (actief, dag modus) en Ketel 3 (uit, nacht modus)</div>
+  </div>
+
+  <p>Op de statustabs (Ketels Voorzijde / Ketels Achterzijde) zijn per ketel de volgende waarden zichtbaar:</p>
+
+  <table class="param-table">
+    <thead><tr><th>Weergave</th><th>Betekenis</th><th>Voorbeeld</th></tr></thead>
+    <tbody>
+      <tr><td><strong>X waarde</strong></td><td>Werkelijk gemeten waarde</td><td>X 45.4°C = aanvoer is 45.4°C</td></tr>
+      <tr><td><strong>W waarde</strong></td><td>Gewenste / berekende setpoint waarde</td><td>W 47.4°C = ketel stuurt naar 47.4°C</td></tr>
+      <tr><td><strong>Zon icoon ☀️</strong></td><td>Dag modus — warmtevraag actief</td><td>Ketel stookt naar comfort setpoint</td></tr>
+      <tr><td><strong>Maan icoon 🌙</strong></td><td>Nacht modus — geen warmtevraag</td><td>Ketel houdt minimale temperatuur aan</td></tr>
+      <tr><td><strong>Sturing %</strong></td><td>Actuele ketelbelasting</td><td>0% = ketel uit; 100% = vol vermogen</td></tr>
+      <tr><td><strong>UIT</strong></td><td>Ketel volledig uitgeschakeld</td><td>Geen warmtevraag en boven nacht setpoint</td></tr>
+      <tr><td><strong>PT waarde (bar)</strong></td><td>Actuele CV waterdruk</td><td>1.1 bar = normaal; &lt;0.9 bar = voormelding</td></tr>
+      <tr><td><strong>Gedempt / Gemiddeld</strong></td><td>Gefilterde buitentemperatuurwaarden voor stookgrens berekening</td><td>Nader te onderzoeken in broncode</td></tr>
+    </tbody>
+  </table>
+
+  <!-- WATERDRUK -->
+  <h2 class="section-title">CV waterdruk bewaking</h2>
+
+  <p>De waterdruk van elke ketelgroep wordt continu bewaakt. Bij te lage druk genereert het systeem een melding of alarm.</p>
+
+  <table class="param-table">
+    <thead><tr><th>Drempelwaarde</th><th>Actie</th></tr></thead>
+    <tbody>
+      <tr><td>Onder 0.9 bar</td><td>Voormelding — zichtbaar in Alarmen scherm</td></tr>
+      <tr><td>Onder 0.6 bar</td><td>Alarm — zichtbaar in Alarmen scherm</td></tr>
+      <tr><td>Herstel setpoint</td><td>1.5 bar — gewenste werkdruk</td></tr>
+    </tbody>
+  </table>
+
+
+  <!-- CONFIGURATIE -->
+  <h2 class="section-title">Configuratieparameters <span class="admin-badge">Admin vereist</span></h2>
+
+  <p>Elk configuratiescherm is verdeeld in drie secties. Alle parameters zijn uitsluitend aanpasbaar door een admin.</p>
+
+  <div class="screenshot-block">
+    <img src="screenshots/cv_config_ketel2.png" alt="Configuratiescherm Ketel 2" onerror="this.parentElement.innerHTML='<div style=\'background:#f0ece4;border:2px dashed #c8bfac;border-radius:3px;padding:2rem;text-align:center;color:#8a8070;font-size:0.82rem;font-family:monospace;margin:1.5rem 0;\'>📷 screenshots/cv_config_ketel2.png — nog toe te voegen</div>'">
+    <div class="screenshot-caption">Configuratiescherm Ketel 2 — stooklijn (links), ruimtetemperatuur (midden), mengklep/pomp/druk (rechts)</div>
+  </div>
+
+  <h3 class="subsection">Sectie 1: Stooklijn</h3>
+  <p>De stooklijn bepaalt de relatie tussen buitentemperatuur en aanvoertemperatuur. Bij lagere buitentemperatuur wordt een hogere aanvoertemperatuur berekend. De grafiek linksonder op het configuratiescherm visualiseert deze relatie.</p>
+
+  <table class="param-table">
+    <thead><tr><th>Parameter</th><th>Type</th><th>Huidige waarde</th><th>Functie & effect</th></tr></thead>
+    <tbody>
+      <tr><td>Stooklijn steilheid</td><td><span class="param-type type-input">Invoer</span></td><td>1.6</td><td>Hoe sterk de aanvoertemperatuur stijgt bij dalende buitentemperatuur. Hogere waarde = steilere lijn = warmer bij kou.</td></tr>
+      <tr><td>Stooklijn kromming</td><td><span class="param-type type-input">Invoer</span></td><td>1.33</td><td>Bepaalt de kromming van de stooklijn. Zichtbaar in de grafiek.</td></tr>
+      <tr><td>Minimale aanvoertemperatuur</td><td><span class="param-type type-input">Invoer</span></td><td>18.0°C</td><td>Ondergrens aanvoertemperatuur, ook bij warm weer.</td></tr>
+      <tr><td>Maximale aanvoertemperatuur</td><td><span class="param-type type-input">Invoer</span></td><td>80.0°C</td><td>Veiligheidsbovengrens aanvoertemperatuur.</td></tr>
+      <tr><td>Maximale verandering in tijd</td><td><span class="param-type type-input">Invoer</span></td><td>5.0 K/min</td><td>Maximale temperatuurstijging per minuut. Voorkomt thermische schokken.</td></tr>
+      <tr><td>Minimum aanvoer vorstbewaking</td><td><span class="param-type type-input">Invoer</span></td><td>15.0°C</td><td>Minimale aanvoertemperatuur voor vorstbeveiliging.</td></tr>
+      <tr><td>Berekende aanvoertemperatuur</td><td><span class="param-type type-output">Output</span></td><td>Variabel</td><td>Door de regeling berekende gewenste aanvoertemperatuur.</td></tr>
+      <tr><td>Offset naar ketels</td><td><span class="param-type type-input">Invoer</span></td><td>3.0°C</td><td>Correctiewaarde opgeteld bij de berekende aanvoertemperatuur.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection">Sectie 2: Ruimte Temperatuur</h3>
+
+  <table class="param-table">
+    <thead><tr><th>Parameter</th><th>Type</th><th>Waarde</th><th>Functie & effect</th></tr></thead>
+    <tbody>
+      <tr><td>Ruimtetemperatuur Comfort</td><td><span class="param-type type-input">Invoer</span></td><td>9.0°C</td><td>Fallback comfort setpoint op ketelniveau. Normaal wordt het setpoint per ruimte ingesteld in het Ruimtes scherm.</td></tr>
+      <tr><td>Ruimtetemperatuur Nacht / Eco-mode</td><td><span class="param-type type-input">Invoer</span></td><td>9.0°C</td><td>Minimale ruimtetemperatuur buiten comfortperiode (nacht setpoint).</td></tr>
+      <tr><td>Ruimtecompensatie factor</td><td><span class="param-type type-input">Invoer</span></td><td>2.0°C/°C</td><td>Per graad afwijking van de ruimtetemperatuur wordt de aanvoertemperatuur met 2°C bijgestuurd.</td></tr>
+      <tr><td>Aanwarm optimizer actief</td><td><span class="param-type type-input">Invoer</span></td><td>AAN</td><td>Activeert de optimale startregeling die berekent hoe ver van tevoren de verwarming start.</td></tr>
+      <tr><td>Optimizer zelf lerend</td><td><span class="param-type type-input">Invoer</span></td><td>AAN</td><td>Optimizer leert van eerdere opwarmtijden en past de starttijd automatisch aan.</td></tr>
+      <tr><td>Maximale aanwarmtijd</td><td><span class="param-type type-input">Invoer</span></td><td>04:00:00</td><td>Maximale tijd die de optimizer mag gebruiken voor voorverwarming.</td></tr>
+      <tr><td>Vakantie offset verlengen aanwarmen</td><td><span class="param-type type-input">Invoer</span></td><td>30%</td><td>Na vakantie wordt de aanwarmtijd verlengd met 30% omdat het gebouw verder is afgekoeld.</td></tr>
+      <tr><td>Optimale starttijd bij -10°C</td><td><span class="param-type type-output">Output</span></td><td>02:50:00 t/K</td><td>Door optimizer berekende starttijd bij -10°C buitentemperatuur.</td></tr>
+      <tr><td>Optimale starttijd bij +10°C</td><td><span class="param-type type-output">Output</span></td><td>02:06:04 t/K</td><td>Door optimizer berekende starttijd bij +10°C buitentemperatuur.</td></tr>
+      <tr><td>Stookgrens Dag gemiddelde buitentemp</td><td><span class="param-type type-input">Invoer</span></td><td>16.0°C</td><td>⚠️ Als het N-daags gemiddelde boven deze waarde ligt, gaat de ketel overdag niet aan.</td></tr>
+      <tr><td>Stookgrens Dag gedempte buitentemp</td><td><span class="param-type type-input">Invoer</span></td><td>18.0°C</td><td>Vergelijkbare grens op basis van de gedempte buitentemperatuur.</td></tr>
+      <tr><td>Aantal dagen gemiddelde buitentemp</td><td><span class="param-type type-input">Invoer</span></td><td>3 D</td><td>⚠️ Aantal dagen voor het voortschrijdend gemiddelde. Bij 3 dagen: als de afgelopen 3 dagen gemiddeld boven 16°C was, gaat de ketel niet aan.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection">Sectie 3: Mengklep — Pomp — CV Druk</h3>
+
+  <table class="param-table">
+    <thead><tr><th>Parameter</th><th>Type</th><th>Waarde</th><th>Functie & effect</th></tr></thead>
+    <tbody>
+      <tr><td>Kp Aanvoertemperatuur</td><td><span class="param-type type-input">Invoer</span></td><td>10.0</td><td>Proportionele versterkingsfactor (Kp) van de PID regelaar voor de aanvoertemperatuur.</td></tr>
+      <tr><td>Tn Aanvoertemperatuur</td><td><span class="param-type type-input">Invoer</span></td><td>600 sec</td><td>Integratietijd (Tn) van de PID regelaar. Bepaalt hoe snel blijvende afwijking wordt weggeregeld.</td></tr>
+      <tr><td>3-weg Regelafsluiter</td><td><span class="param-type type-input">Invoer</span></td><td>AAN</td><td>Activeert de 3-weg mengklep voor temperatuurregeling.</td></tr>
+      <tr><td>Nalooptijd pomp</td><td><span class="param-type type-input">Invoer</span></td><td>00:15:00</td><td>Tijd dat de pomp blijft nadraaien na uitschakeling van de ketel, voor warmteafvoer.</td></tr>
+      <tr><td>Periodiek inschakelen</td><td><span class="param-type type-input">Invoer</span></td><td>AAN</td><td>Activeert periodiek inschakelen van de pomp om vastlopen te voorkomen (elke 48 uur, 1 minuut).</td></tr>
+      <tr><td>Gemeten CV waterdruk</td><td><span class="param-type type-output">Output</span></td><td>Variabel</td><td>Actuele gemeten waterdruk in het CV systeem.</td></tr>
+      <tr><td>Setpoint herstel waterdruk</td><td><span class="param-type type-input">Invoer</span></td><td>1.5 bar</td><td>Gewenste werkdruk van het CV systeem.</td></tr>
+      <tr><td>Setpoint min waterdruk Voormelding</td><td><span class="param-type type-input">Invoer</span></td><td>0.9 bar</td><td>Drempelwaarde voor voorwaarschuwing bij te lage waterdruk.</td></tr>
+      <tr><td>Setpoint min waterdruk Alarm</td><td><span class="param-type type-input">Invoer</span></td><td>0.6 bar</td><td>Drempelwaarde voor alarm bij kritisch lage waterdruk.</td></tr>
+    </tbody>
+  </table>
+
+</main>
+
+<footer>
+  <a href="index.html">← Menorah Klimaatbeheer Handleiding</a> · Hoofdstuk 04: CV Ketels · v1.0 Mei 2026
+</footer>
+
+</body>
+</html>

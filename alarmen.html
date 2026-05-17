@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alarmen & Meldingen — Menorah Klimaatbeheer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #1a1a2e; --paper: #f5f0e8; --accent: #8b4513; --accent-light: #c4763a; --warm-grey: #8a8070; --light-rule: #ddd4c0; --warning: #c0392b; --success: #27ae60; --info: #2980b9; --section-bg: #fffdf7; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Source Sans 3', Georgia, serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
+  header { background: var(--ink); color: var(--paper); }
+  .header-inner { max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 1.75rem; display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; }
+  .header-eyebrow { font-family: 'Source Code Pro', monospace; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--accent-light); text-transform: uppercase; margin-bottom: 0.5rem; }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; }
+  header h1 span { color: var(--accent-light); }
+  .header-back { font-size: 0.8rem; color: #b0a090; text-decoration: none; font-family: 'Source Code Pro', monospace; }
+  .header-back:hover { color: var(--accent-light); }
+  .header-rule { height: 3px; background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 50%, transparent 100%); }
+  nav { background: #252535; border-bottom: 1px solid #333345; position: sticky; top: 0; z-index: 100; }
+  .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; }
+  nav a { color: #c8b8a0; text-decoration: none; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.9rem 1.2rem; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover, nav a.active { color: var(--accent-light); border-bottom-color: var(--accent-light); }
+  main { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+  .page-intro p { font-size: 1rem; line-height: 1.75; color: #3a3020; max-width: 720px; margin-bottom: 2.5rem; }
+  h2.section-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--ink); margin: 2.5rem 0 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--light-rule); display: flex; align-items: center; gap: 0.75rem; }
+  h2.section-title::before { content: ''; display: inline-block; width: 20px; height: 3px; background: var(--accent); flex-shrink: 0; }
+  h3.subsection { font-size: 1rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+  p { font-size: 0.95rem; line-height: 1.75; color: #3a3020; margin-bottom: 0.75rem; }
+  .warning-box { background: #fff8f0; border: 1px solid #e8a050; border-left: 4px solid var(--warning); border-radius: 2px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+  .warning-box strong { color: var(--warning); display: block; margin-bottom: 0.4rem; font-size: 0.9rem; }
+  .warning-box p { font-size: 0.88rem; color: #5a3a10; margin-bottom: 0; }
+  .info-box { background: #f0f5ff; border: 1px solid #a0b8e8; border-left: 4px solid var(--info); border-radius: 2px; padding: 1.25rem 1.5rem; margin: 1.5rem 0; }
+  .info-box strong { color: var(--info); display: block; margin-bottom: 0.4rem; font-size: 0.9rem; }
+  .info-box p { font-size: 0.88rem; color: #1a3060; margin-bottom: 0; }
+
+  /* ALARM TABLE */
+  .alarm-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.83rem; }
+  .alarm-table th { background: var(--ink); color: var(--paper); text-align: left; padding: 0.6rem 1rem; font-family: 'Source Code Pro', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; }
+  .alarm-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--light-rule); vertical-align: top; color: #3a3020; line-height: 1.5; }
+  .alarm-table tr:nth-child(even) td { background: #faf7f0; }
+  .alarm-table tr:last-child td { border-bottom: none; }
+
+  /* DATA TABLE */
+  .data-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.83rem; }
+  .data-table th { background: var(--ink); color: var(--paper); text-align: left; padding: 0.6rem 1rem; font-family: 'Source Code Pro', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; }
+  .data-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--light-rule); vertical-align: top; color: #3a3020; line-height: 1.5; }
+  .data-table tr:nth-child(even) td { background: #faf7f0; }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  /* STEPS */
+  .steps { counter-reset: step; list-style: none; margin: 1rem 0 1.5rem; }
+  .steps li { counter-increment: step; display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.9rem; line-height: 1.6; color: #3a3020; }
+  .steps li::before { content: counter(step); background: var(--accent); color: white; min-width: 1.6rem; width: 1.6rem; height: 1.6rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Source Code Pro', monospace; font-size: 0.7rem; font-weight: 600; flex-shrink: 0; margin-top: 0.1rem; }
+
+  /* SCREENSHOTS */
+  .screenshot-block { margin: 1.5rem 0; border: 1px solid var(--light-rule); border-radius: 3px; overflow: hidden; max-width:800px; }
+  .screenshot-block img { width: 100%; display: block; }
+  .screenshot-caption { background: var(--ink); color: #c8b8a0; font-family: 'Source Code Pro', monospace; font-size: 0.72rem; padding: 0.5rem 1rem; letter-spacing: 0.03em; }
+
+  /* ACTIVE ALARMS */
+  .active-alarms { background: #fff5f5; border: 1px solid #f0b0b0; border-left: 4px solid var(--warning); border-radius: 3px; padding: 1.5rem 2rem; margin-bottom: 2rem; }
+  .active-alarms h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--warning); margin-bottom: 1rem; }
+
+  footer { background: var(--ink); color: #b0a090; text-align: center; padding: 2rem; font-size: 0.88rem; font-family: 'Source Code Pro', monospace; margin-top: 4rem; }
+  footer a { color: var(--accent-light); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-eyebrow">Hoofdstuk 07</div>
+      <h1>Alarmen &amp; <span>Meldingen</span></h1>
+    </div>
+    <a href="index.html" class="header-back">← Terug naar overzicht</a>
+  </div>
+  <div class="header-rule"></div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html">Home</a>
+    <a href="systeem.html">Systeem</a>
+    <a href="portaal.html">Portaal</a>
+    <a href="klokken.html">Klokken</a>
+    <a href="cv_ketels.html">CV Ketels</a>
+    <a href="ruimtes.html">Ruimtes</a>
+    <a href="io.html">I/O</a>
+    <a href="alarmen.html" class="active">Alarmen</a>
+    <a href="dataplotter.html">Dataplotter</a>
+    <a href="ontwikkelomgeving.html">Ontwikkelomgeving</a>
+    <a href="verbeteringen.html">Verbeteringen</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="page-intro">
+    <p>Het Alarmen scherm toont alle actieve en historische alarmen van de installatie. Bij een actief alarm verschijnt rechtsboven in het portaal een oranje "Alarm Prio 2" melding.</p>
+  </div>
+
+  <!-- ACTIEVE ALARMEN -->
+  <div class="active-alarms">
+    <h3>⚠ Actieve alarmen — stand mei 2026</h3>
+    <table class="alarm-table">
+      <thead><tr><th>Datum</th><th>Type</th><th>Melding</th><th>Actie</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>15-05-2026 11:45</td>
+          <td>CVdruk Melding</td>
+          <td>Voormelding Laagwater Ketel 3 Bestuurskamer (0.8 bar)</td>
+          <td>CV systeem bijvullen tot 1.5 bar</td>
+        </tr>
+        <tr>
+          <td>13-05-2026 21:35</td>
+          <td>EnOcean Sensor Alarm</td>
+          <td>Ruimtetemp 208 Kinderruimte 5 — geen verbinding</td>
+          <td>Sensor controleren (batterij / bereik)</td>
+        </tr>
+        <tr>
+          <td>09-05-2026 15:48</td>
+          <td>EnOcean Sensor Alarm</td>
+          <td>Ruimtetemp 023 Kinderruimte 3 — geen verbinding</td>
+          <td>Sensor controleren (batterij / bereik)</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.78rem; color:#8b3a3a; margin-top:1rem;">⚠ E-mail notificaties werken momenteel niet — alarmen worden niet automatisch doorgemeld. Zie <a href="verbeteringen.html" style="color:var(--warning);">bekende beperkingen #005</a>.</p>
+  </div>
+
+  <!-- SCHERM BESCHRIJVING -->
+  <h2 class="section-title">Het Alarmen scherm</h2>
+
+  <div class="screenshot-block">
+    <img src="screenshots/alarmen_overzicht.png" alt="Alarmen scherm overzicht" onerror="this.parentElement.innerHTML='<div style=\'background:#f0ece4;border:2px dashed #c8bfac;border-radius:3px;padding:2rem;text-align:center;color:#8a8070;font-size:0.82rem;font-family:monospace;margin:1.5rem 0;\'>📷 screenshots/alarmen_overzicht.png — nog toe te voegen</div>'">
+    <div class="screenshot-caption">Alarmen scherm — lijst met actieve alarmen gesorteerd op timestamp</div>
+  </div>
+
+  <p>Het alarmen scherm toont per alarm de volgende informatie:</p>
+
+  <table class="data-table">
+    <thead><tr><th>Kolom</th><th>Betekenis</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Timestamp</strong></td><td>Datum en tijdstip waarop het alarm is ontstaan</td></tr>
+      <tr><td><strong>Type Message</strong></td><td>Categorie van het alarm (CVdruk Melding, EnOcean Sensor Alarm, etc.)</td></tr>
+      <tr><td><strong>Prio</strong></td><td>Prioriteit — hoe lager het getal, hoe hoger de prioriteit. Prio 30 = informatief alarm</td></tr>
+      <tr><td><strong>Meld tekst</strong></td><td>Omschrijving van het alarm</td></tr>
+      <tr><td><strong>Values</strong></td><td>Bijbehorende meetwaarde op het moment van het alarm</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection">Knoppen onderaan</h3>
+  <table class="data-table">
+    <thead><tr><th>Knop</th><th>Functie</th></tr></thead>
+    <tbody>
+      <tr><td><strong>ACK selected</strong></td><td>Bevestig het geselecteerde alarm — alarm verdwijnt uit de actieve lijst</td></tr>
+      <tr><td><strong>ACK all visible</strong></td><td>Bevestig alle zichtbare alarmen tegelijk</td></tr>
+      <tr><td><strong>History</strong></td><td>Toon het historisch alarm overzicht — alle alarmen inclusief al bevestigde</td></tr>
+      <tr><td><strong>Freeze Scrl Pos</strong></td><td>Bevries de scrollpositie — handig als er nieuwe alarmen binnenkomen tijdens het lezen</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ALARM TYPEN -->
+  <h2 class="section-title">Alarm typen en betekenis</h2>
+
+  <table class="data-table">
+    <thead><tr><th>Alarm type</th><th>Oorzaak</th><th>Actie</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>EnOcean Sensor Alarm</strong></td>
+        <td>Draadloze ruimtesensor heeft geen verbinding meer. Batterij leeg of buiten bereik.</td>
+        <td>Sensor controleren in de ruimte. Batterij vervangen (AA of AAA). Na herstel alarm bevestigen via ACK.</td>
+      </tr>
+      <tr>
+        <td><strong>CVdruk Melding (Voormelding)</strong></td>
+        <td>Waterdruk in CV systeem onder 0.9 bar gedaald.</td>
+        <td>CV systeem bijvullen tot 1.5 bar. Contact opnemen met technische dienst of Van Niel.</td>
+      </tr>
+      <tr>
+        <td><strong>CVdruk Alarm</strong></td>
+        <td>Waterdruk kritisch laag — onder 0.6 bar. Ketel kan uitvallen.</td>
+        <td>Direct CV systeem bijvullen. Als druk niet stijgt: lekkage controleren. Van Niel inschakelen.</td>
+      </tr>
+      <tr>
+        <td><strong>Storing Ketel</strong></td>
+        <td>Ketel meldt een storing via het digitale storing contact.</td>
+        <td>Ketel zelf inspecteren. Storingsmelding op het ketelfront aflezen. Van Niel inschakelen.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ALARM DOORMELDING -->
+  <h2 class="section-title">Alarm e-mail doormelding</h2>
+
+  <div class="warning-box">
+    <strong>⚠ E-mail doormelding werkt momenteel niet</strong>
+    <p>Het Systeem scherm toont "Failed sending network data". Alarmen worden daardoor niet automatisch per e-mail doorgemeld. Controleer het Alarmen scherm regelmatig handmatig totdat dit probleem is opgelost.</p>
+  </div>
+
+  <p>De alarm doormelding is configureerbaar via <strong>Systeem → Alarm Instellingen</strong>. Hier kunnen gebruikers worden aangemaakt met hun naam, e-mailadres en mobiel nummer. Per gebruiker kun je aangeven voor welke alarmgroepen ze meldingen ontvangen:</p>
+
+  <table class="data-table">
+    <thead><tr><th>Alarmgroep</th><th>Beschrijving</th></tr></thead>
+    <tbody>
+      <tr><td><strong>AlPrio1</strong></td><td>Hoogste prioriteit alarmen — momenteel niet in gebruik</td></tr>
+      <tr><td><strong>AlPrio2</strong></td><td>Prio 2 alarmen — EnOcean sensor uitval, CV druk meldingen</td></tr>
+      <tr><td><strong>WatchDog</strong></td><td>Dagelijkse hartslag — bevestigt dat de PLC nog communiceert (dagelijks om 12:00)</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="subsection">Een beheerder toevoegen aan alarm doormelding</h3>
+  <ol class="steps">
+    <li><span>Ga naar <strong>Systeem → Alarm Instellingen</strong> (admin login vereist)</span></li>
+    <li><span>Klik op een lege regel in de Users lijst links</span></li>
+    <li><span>Vul rechts de <strong>Naam</strong>, <strong>Email</strong> en optioneel <strong>Mobiel</strong> in</span></li>
+    <li><span>Vink de gewenste alarmgroepen aan — minimaal <strong>AlPrio2</strong> voor praktische meldingen</span></li>
+    <li><span>Herstel eerst de e-mail infrastructuur (zie <a href="verbeteringen.html" style="color:var(--accent);">verbeteringen #005</a>) voordat doormelding werkt</span></li>
+  </ol>
+
+  <!-- WATCHDOG -->
+  <h2 class="section-title">WatchDog functie</h2>
+
+  <p>De WatchDog is een automatisch hartslag signaal dat de PLC dagelijks om <strong>12:00 uur</strong> verstuurt. Als dit signaal uitblijft, weet de ontvanger dat de PLC niet meer communiceert — bijvoorbeeld door een stroomstoring, netwerkverstoring of hardwarefout.</p>
+
+  <p>De WatchDog status is zichtbaar via <strong>Systeem → Alarm Instellingen</strong> rechtsboven. Een oranje puls-uitgang knop betekent dat de WatchDog actief is. Momenteel ontvangt alleen Van Niel de WatchDog melding.</p>
+
+</main>
+
+<footer>
+  <a href="index.html">← Menorah Klimaatbeheer Handleiding</a> · Hoofdstuk 07: Alarmen & Meldingen · v1.0 Mei 2026
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klokprogramma's — Menorah Klimaatbeheer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --paper: #f5f0e8;
+    --accent: #8b4513;
+    --accent-light: #c4763a;
+    --warm-grey: #8a8070;
+    --light-rule: #ddd4c0;
+    --warning: #c0392b;
+    --success: #27ae60;
+    --info: #2980b9;
+    --section-bg: #fffdf7;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Source Sans 3', Georgia, serif; background: var(--paper); color: var(--ink); min-height: 100vh; }
+
+  header {
+    background: var(--ink); color: var(--paper); padding: 0;
+  }
+  .header-inner {
+    max-width: 1100px; margin: 0 auto; padding: 2rem 2rem 1.75rem;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem;
+  }
+  .header-eyebrow {
+    font-family: 'Source Code Pro', monospace; font-size: 0.7rem;
+    letter-spacing: 0.2em; color: var(--accent-light); text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; }
+  header h1 span { color: var(--accent-light); }
+  .header-back { font-size: 0.8rem; color: #b0a090; text-decoration: none; font-family: 'Source Code Pro', monospace; }
+  .header-back:hover { color: var(--accent-light); }
+  .header-rule { height: 3px; background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 50%, transparent 100%); }
+
+  nav { background: #252535; border-bottom: 1px solid #333345; position: sticky; top: 0; z-index: 100; }
+  .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 2rem; display: flex; gap: 0; overflow-x: auto; }
+  nav a { color: #c8b8a0; text-decoration: none; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 0.9rem 1.2rem; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; }
+  nav a:hover, nav a.active { color: var(--accent-light); border-bottom-color: var(--accent-light); }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
+
+  .page-intro { margin-bottom: 2.5rem; }
+  .page-intro p { font-size: 1rem; line-height: 1.75; color: #3a3020; max-width: 720px; }
+
+  h2.section-title {
+    font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--ink);
+    margin: 2.5rem 0 1.25rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--light-rule);
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  h2.section-title::before { content: ''; display: inline-block; width: 20px; height: 3px; background: var(--accent); flex-shrink: 0; }
+
+  h3.subsection { font-family: 'Source Sans 3', sans-serif; font-size: 1rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 0.75rem; }
+
+  p { font-size: 0.95rem; line-height: 1.75; color: #3a3020; margin-bottom: 0.75rem; }
+
+  /* WARNING BOX */
+  .warning-box {
+    background: #fff8f0; border: 1px solid #e8a050; border-left: 4px solid var(--warning);
+    border-radius: 2px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+  }
+  .warning-box strong { color: var(--warning); display: block; margin-bottom: 0.4rem; font-size: 0.9rem; }
+  .warning-box p { font-size: 0.88rem; color: #5a3a10; margin-bottom: 0; }
+
+  /* INFO BOX */
+  .info-box {
+    background: #f0f5ff; border: 1px solid #a0b8e8; border-left: 4px solid var(--info);
+    border-radius: 2px; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+  }
+  .info-box strong { color: var(--info); display: block; margin-bottom: 0.4rem; font-size: 0.9rem; }
+  .info-box p { font-size: 0.88rem; color: #1a3060; margin-bottom: 0; }
+
+  /* STEPS */
+  .steps {
+    counter-reset: step;
+    list-style: none;
+    margin: 1rem 0 1.5rem;
+  }
+  .steps li {
+    counter-increment: step;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #3a3020;
+  }
+  .steps li::before {
+    content: counter(step);
+    background: var(--accent);
+    color: white;
+    min-width: 1.6rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem; font-size: 0.85rem; }
+  .data-table th {
+    background: var(--ink); color: var(--paper);
+    text-align: left; padding: 0.6rem 1rem;
+    font-family: 'Source Code Pro', monospace; font-size: 0.7rem;
+    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400;
+  }
+  .data-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--light-rule); vertical-align: top; color: #3a3020; line-height: 1.5; }
+  .data-table tr:nth-child(even) td { background: #faf7f0; }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  /* CYCLE DIAGRAM */
+  .cycle-diagram {
+    background: var(--section-bg); border: 1px solid var(--light-rule);
+    border-radius: 3px; padding: 1.5rem; margin: 1.5rem 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  }
+  .cycle-step {
+    text-align: center; padding: 1rem 0.5rem; position: relative;
+  }
+  .cycle-step:not(:last-child)::after {
+    content: '→';
+    position: absolute; right: -0.5rem; top: 50%;
+    transform: translateY(-50%);
+    color: var(--accent-light); font-size: 1.2rem;
+  }
+  .cycle-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .cycle-label { font-size: 0.75rem; font-weight: 600; color: var(--ink); margin-bottom: 0.25rem; }
+  .cycle-desc { font-size: 0.7rem; color: var(--warm-grey); line-height: 1.4; }
+
+  /* SCREENSHOTS */
+  .screenshot-block {
+    margin: 1.5rem 0;
+    border: 1px solid var(--light-rule);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .screenshot-block img {
+    width: 100%;
+    display: block;
+  }
+  .screenshot-caption {
+    background: var(--ink);
+    color: #c8b8a0;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.72rem;
+    padding: 0.5rem 1rem;
+    letter-spacing: 0.03em;
+  }
+  .screenshot-placeholder {
+    background: #f0ece4;
+    border: 2px dashed #c8bfac;
+    border-radius: 3px;
+    padding: 2rem;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: var(--warm-grey);
+    font-size: 0.82rem;
+    font-family: 'Source Code Pro', monospace;
+  }
+  .screenshot-placeholder .placeholder-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .screenshot-placeholder .placeholder-name { color: var(--accent); font-weight: 600; margin-bottom: 0.25rem; }
+
+  footer { background: var(--ink); color: #b0a090; text-align: center; padding: 2rem; font-size: 0.88rem; font-family: 'Source Code Pro', monospace; margin-top: 4rem; }
+  footer a { color: var(--accent-light); text-decoration: none; }
+
+  @media (max-width: 768px) {
+    .cycle-diagram { grid-template-columns: 1fr 1fr; }
+    .cycle-step:not(:last-child)::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-eyebrow">Hoofdstuk 03</div>
+      <h1>Klok<span>programma's</span></h1>
+    </div>
+    <a href="index.html" class="header-back">← Terug naar overzicht</a>
+  </div>
+  <div class="header-rule"></div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html">Home</a>
+    <a href="systeem.html">Systeem</a>
+    <a href="portaal.html">Portaal</a>
+    <a href="klokken.html" class="active">Klokken</a>
+    <a href="cv_ketels.html">CV Ketels</a>
+    <a href="ruimtes.html">Ruimtes</a>
+    <a href="io.html">I/O</a>
+    <a href="alarmen.html">Alarmen</a>
+    <a href="dataplotter.html">Dataplotter</a>
+    <a href="ontwikkelomgeving.html">Ontwikkelomgeving</a>
+    <a href="verbeteringen.html">Verbeteringen</a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="page-intro">
+    <p>Het Klokken scherm is het belangrijkste scherm voor dagelijks beheer. Hier stel je in wanneer welke ruimte op temperatuur moet zijn. Het systeem berekent zelf hoe ver van tevoren de verwarming moet starten.</p>
+  </div>
+
+  <!-- CYCLUS -->
+  <h2 class="section-title">Hoe de regelcyclus werkt</h2>
+
+  <div class="cycle-diagram">
+    <div class="cycle-step">
+      <div class="cycle-icon">🌙</div>
+      <div class="cycle-label">Standby</div>
+      <div class="cycle-desc">Ruimte koelt af tot nacht setpoint (comfort − 8°C)</div>
+    </div>
+    <div class="cycle-step">
+      <div class="cycle-icon">⏰</div>
+      <div class="cycle-label">Optimizer start</div>
+      <div class="cycle-desc">Regeling berekent wanneer te starten voor tijdige opwarming</div>
+    </div>
+    <div class="cycle-step">
+      <div class="cycle-icon">☀️</div>
+      <div class="cycle-label">"Tijd aan"</div>
+      <div class="cycle-desc">Ruimte is op comfort setpoint — het gewenste comfortmoment</div>
+    </div>
+    <div class="cycle-step">
+      <div class="cycle-icon">🌡</div>
+      <div class="cycle-label">"Tijd uit"</div>
+      <div class="cycle-desc">Terugval naar standby setpoint (comfort − 2°C)</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <strong>ℹ Belangrijk: "Tijd aan" is het comfortmoment, niet het starttijdstip</strong>
+    <p>"Tijd aan" geeft aan wanneer de ruimte op de gewenste temperatuur moet zijn. De ketel start automatisch eerder op basis van de buitentemperatuur en de opwarmgeschiedenis van de ruimte. Bij een koude ruimte of lage buitentemperatuur start de verwarming dus eerder.</p>
+  </div>
+
+  <!-- WEEKPROGRAMMA -->
+  <h2 class="section-title">Weekprogramma instellen</h2>
+
+  <p>Elke ruimte heeft een eigen tabblad bovenaan het Klokken scherm. Per ruimte kun je meerdere tijdblokken instellen voor verschillende dagen van de week.</p>
+
+  <h3 class="subsection">Navigatie</h3>
+  <p>De beschikbare ruimtes zijn: <strong>Grote Zaal, Voor Kinderruimte, Achter Kinderruimte, Jeugdzolder, Kantoor Johan, Kantoor Bestuur, Bovenzaal</strong>. Klik op het gewenste tabblad om het weekprogramma van die ruimte te bekijken.</p>
+
+  <div class="screenshot-block">
+    <img src="screenshots/klokken_weekprogramma.png" alt="Klokken scherm — weekprogramma tabblad met voorbeeld tijdblokken" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><div class=\'placeholder-icon\'>📷</div><div class=\'placeholder-name\'>screenshots/klokken_weekprogramma.png</div><div>Screenshot nog toe te voegen</div></div>'">
+    <div class="screenshot-caption">Klokken scherm — weekprogramma tabblad (voorbeeld: Grote Zaal)</div>
+  </div>
+
+  <h3 class="subsection">Een tijdblok toevoegen</h3>
+  <ol class="steps">
+    <li><span>Ga naar het tabblad van de gewenste ruimte bovenaan het Klokken scherm</span></li>
+    <li><span>Zorg dat de subtab <strong>Weekprogramma</strong> actief is (linker subtab)</span></li>
+    <li><span>Klik op de groene <strong>Toevoegen</strong> knop — een nieuwe rij verschijnt onderaan de lijst</span></li>
+    <li><span>Klik op het <strong>Tijd aan</strong> veld en stel het gewenste comfortmoment in via de tijdpopup</span></li>
+    <li><span>Klik op het <strong>Tijd uit</strong> veld en stel het einde van de verwarmingsperiode in</span></li>
+    <li><span>Vink de gewenste <strong>dagen van de week</strong> aan: Ma, Di, Woe, Don, Vrij, Zat, Zon</span></li>
+    <li><span>Vink het <strong>Activeer</strong> vakje aan om het tijdblok te activeren</span></li>
+  </ol>
+
+  <h3 class="subsection">Overzicht kolommen weekprogramma</h3>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Kolom</th>
+        <th>Functie</th>
+        <th>Opmerking</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Activeer</strong></td>
+        <td>Tijdblok aan- of uitzetten</td>
+        <td>Uitgevinkt = tijdblok bestaat maar is inactief</td>
+      </tr>
+      <tr>
+        <td><strong>Tijd aan</strong></td>
+        <td>Gewenst comfortmoment</td>
+        <td>Niet het starttijdstip van de ketel!</td>
+      </tr>
+      <tr>
+        <td><strong>Tijd uit</strong></td>
+        <td>Einde comfortperiode</td>
+        <td>Daarna terugval naar standby setpoint</td>
+      </tr>
+      <tr>
+        <td><strong>Ma t/m Zon</strong></td>
+        <td>Dagen waarop dit blok geldt</td>
+        <td>Meerdere dagen mogelijk per rij</td>
+      </tr>
+      <tr>
+        <td><strong>Waarde</strong></td>
+        <td>Heeft geen functie</td>
+        <td>Kan worden genegeerd</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PARTY MODUS -->
+  <h3 class="subsection">Party modus (boost)</h3>
+  <p>De Party modus is een directe override: de verwarming gaat onmiddellijk aan voor de ingestelde duur, ongeacht het klokprogramma. Handig als er een onverwachte activiteit is.</p>
+  <ol class="steps">
+    <li><span>Ga naar het tabblad van de gewenste ruimte</span></li>
+    <li><span>Stel indien gewenst de <strong>Duur</strong> in (standaard 120 minuten)</span></li>
+    <li><span>Klik op <strong>Start</strong> om de boost te activeren</span></li>
+  </ol>
+  <p>Het setpoint dat wordt gebruikt is het comfort setpoint zoals ingesteld in het Ruimtes scherm.</p>
+
+  <!-- EXTRA DAGEN -->
+  <h2 class="section-title">Extra dagen en vakanties</h2>
+
+  <p>De subtab "Extra dagen en Vakanties" is bedoeld voor eenmalige of jaarlijks terugkerende afwijkingen van het weekprogramma — zoals een extra kerkdienst op een doordeweekse dag, of een vakantieperiode.</p>
+
+  <div class="screenshot-block">
+    <img src="screenshots/klokken_extra_dagen.png" alt="Klokken scherm — extra dagen en vakanties tabblad" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><div class=\'placeholder-icon\'>📷</div><div class=\'placeholder-name\'>screenshots/klokken_extra_dagen.png</div><div>Screenshot nog toe te voegen</div></div>'">
+    <div class="screenshot-caption">Klokken scherm — extra dagen en vakanties tabblad</div>
+  </div>
+
+  <div class="warning-box">
+    <strong>⚠ Kritieke valkuil: Extra dag schakelt het volledige weekprogramma uit</strong>
+    <p>Een actieve entry in "Extra dagen" schakelt het <em>volledige</em> weekprogramma voor die dag uit — ook tijdblokken die niet overlappen met de extra dag entry. Als er op een zondag zowel een ochtendkerkdienst (weekprogramma) als een avondprogramma (extra dag) is, wordt de ochtend NIET verwarmd. Voeg in dat geval ook het ochtendprogramma als aparte extra dag entry toe.</p>
+  </div>
+
+  <h3 class="subsection">Een extra dag invoeren — stap voor stap</h3>
+
+  <div class="warning-box">
+    <strong>⚠ Vergeet de dag niet aan te vinken!</strong>
+    <p>Bij een extra dag entry moet de dag van de week altijd handmatig aangevinkt worden, ook als die logisch af te leiden is uit de datum. Zonder aangevinkte dag werkt het programma niet en wordt de ruimte niet verwarmd. Dit is een bekend foutgevoelig punt.</p>
+  </div>
+
+  <ol class="steps">
+    <li><span>Ga naar het tabblad van de gewenste ruimte bovenaan het Klokken scherm</span></li>
+    <li><span>Selecteer de subtab <strong>Extra dagen en Vakanties</strong> (rechter subtab)</span></li>
+    <li><span>Klik op de groene <strong>Toevoegen</strong> knop — een nieuwe rij verschijnt</span></li>
+    <li><span>Klik op het <strong>Start datum</strong> veld en stel de datum in via de kalender popup</span></li>
+  </ol>
+
+  <div class="screenshot-block" style="max-width:360px;">
+    <img src="screenshots/klokken_datum_popup.png" alt="Datum kiezer popup" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><div class=\'placeholder-icon\'>📷</div><div class=\'placeholder-name\'>screenshots/klokken_datum_popup.png</div><div>Screenshot nog toe te voegen</div></div>'">
+    <div class="screenshot-caption">Datum kiezer popup — navigeer met de pijlen naar de gewenste maand en klik op de dag</div>
+  </div>
+
+  <ol class="steps" style="counter-reset: step 4;">
+    <li><span>Klik op het <strong>Einddatum</strong> veld en stel in — zelfde dag voor eenmalig gebruik, meerdere dagen voor vakanties</span></li>
+    <li><span>Klik op het <strong>Tijd aan</strong> veld en stel het comfortmoment in via de tijdpopup (uren aanpassen met ↑↓ pijlen)</span></li>
+  </ol>
+
+  <div class="screenshot-block" style="max-width:360px;">
+    <img src="screenshots/klokken_tijd_popup.png" alt="Tijd kiezer popup" onerror="this.parentElement.innerHTML='<div class=\'screenshot-placeholder\'><div class=\'placeholder-icon\'>📷</div><div class=\'placeholder-name\'>screenshots/klokken_tijd_popup.png</div><div>Screenshot nog toe te voegen</div></div>'">
+    <div class="screenshot-caption">Tijd kiezer popup — uren en minuten instellen met de pijltjes</div>
+  </div>
+
+  <ol class="steps" style="counter-reset: step 6;">
+    <li><span>Klik op het <strong>Tijd uit</strong> veld en stel het einde in</span></li>
+    <li><span>Vink de <strong>dag van de week</strong> aan ⚠️ — dit is verplicht, ook als de datum al correct is ingesteld</span></li>
+    <li><span>Voor jaarlijks terugkerende dagen: vink <strong>Jaarlijks</strong> aan</span></li>
+    <li><span>Vink het <strong>Activeer</strong> vakje aan</span></li>
+    <li><span>Controleer of er geen conflicten zijn met het weekprogramma voor die dag</span></li>
+  </ol>
+
+  <h3 class="subsection">Overzicht kolommen extra dagen</h3>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Kolom</th>
+        <th>Functie</th>
+        <th>Opmerking</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Activeer</strong></td>
+        <td>Entry aan- of uitzetten</td>
+        <td>Uitgevinkt = entry bestaat maar heeft geen effect</td>
+      </tr>
+      <tr>
+        <td><strong>Start datum</strong></td>
+        <td>Eerste dag waarop de entry geldt</td>
+        <td>Invoer via kalender popup</td>
+      </tr>
+      <tr>
+        <td><strong>Einddatum</strong></td>
+        <td>Laatste dag waarop de entry geldt</td>
+        <td>Zelfde als startdatum voor eenmalig gebruik</td>
+      </tr>
+      <tr>
+        <td><strong>Jaarlijks</strong></td>
+        <td>Herhaalt elk jaar op dezelfde datum</td>
+        <td>Handig voor vaste feestdagen</td>
+      </tr>
+      <tr>
+        <td><strong>Tijd aan / Tijd uit</strong></td>
+        <td>Comfortperiode</td>
+        <td>Zelfde betekenis als weekprogramma</td>
+      </tr>
+      <tr>
+        <td><strong>Ma t/m Zon</strong></td>
+        <td>Dag van de week</td>
+        <td>⚠️ Altijd verplicht aanvinken, ook bij een specifieke datum</td>
+      </tr>
+      <tr>
+        <td><strong>Waarde</strong></td>
+        <td>Heeft geen functie</td>
+        <td>Kan worden genegeerd</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ENABLE HOLIDAY -->
+  <h3 class="subsection">Enable Holiday</h3>
+  <p>De knop "Enable Holiday" heeft momenteel <strong>geen functie</strong> en wordt in een toekomstige update verwijderd. Deze knop kan worden genegeerd.</p>
+
+  <!-- STOOKGRENS -->
+  <h2 class="section-title">Wanneer de ketel niet aanslaat (stookgrens)</h2>
+
+  <p>Het kan voorkomen dat de verwarming niet aanslaat ondanks een actief klokprogramma. Dit heeft te maken met de stookgrens op basis van de buitentemperatuur.</p>
+
+  <div class="warning-box">
+    <strong>⚠ Stookgrens: ketel blijft uit bij warm gemiddeld weer</strong>
+    <p>Als het 3-daags gemiddelde van de buitentemperatuur boven 16°C ligt, gaat de ketel niet aan. Dit is een energiebesparende maatregel, maar zorgt voor problemen in het voor- en najaar als er een koude dag volgt op een warme periode. De instelling is aanpasbaar in het CV Ketels configuratiescherm (admin vereist).</p>
+  </div>
+
+  <p>Als u vermoedt dat dit het geval is, controleer dan in het CV Ketels scherm de waarden "Stookgrens Dag gemiddelde buitentemp" en "Aantal dagen gemiddelde buitentemp". Zie <a href="cv_ketels.html" style="color:var(--accent);">Hoofdstuk 4 — CV Ketels</a> voor details.</p>
+
+</main>
+
+<footer>
+  <a href="index.html">← Menorah Klimaatbeheer Handleiding</a> · Hoofdstuk 03: Klokprogramma's · v1.0 Mei 2026
+</footer>
+
+</body>
+</html>
