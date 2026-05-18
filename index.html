@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menorah Klimaatbeheer — Beheershandleiding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+3:wght@300;400;600&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --paper: #f5f0e8;
+    --accent: #8b4513;
+    --accent-light: #c4763a;
+    --warm-grey: #8a8070;
+    --light-rule: #ddd4c0;
+    --warning: #c0392b;
+    --success: #27ae60;
+    --info: #2980b9;
+    --section-bg: #fffdf7;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: end;
+  }
+
+  .header-eyebrow {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--accent-light);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  header h1 span {
+    color: var(--accent-light);
+  }
+
+  .header-sub {
+    font-size: 1rem;
+    color: #c8b8a0;
+    margin-top: 0.75rem;
+    font-weight: 300;
+  }
+
+  .header-meta {
+    text-align: right;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.75rem;
+    color: #b0a090;
+    line-height: 1.8;
+  }
+
+  .header-rule {
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 50%, transparent 100%);
+  }
+
+  /* NAV */
+  nav {
+    background: #252535;
+    border-bottom: 1px solid #333345;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+
+  nav a {
+    color: #c8b8a0;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.9rem 1.2rem;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  nav a:hover, nav a.active {
+    color: var(--accent-light);
+    border-bottom-color: var(--accent-light);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+
+  /* ALERT BANNER */
+  .alert-banner {
+    background: #fef9f0;
+    border: 1px solid #e8a050;
+    border-left: 4px solid var(--accent);
+    border-radius: 2px;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .alert-banner .alert-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .alert-banner strong {
+    font-weight: 600;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .alert-banner p {
+    font-size: 0.9rem;
+    color: #5a4a30;
+    line-height: 1.5;
+  }
+
+  /* INTRO */
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    align-items: start;
+  }
+
+  .intro-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+
+  .intro-text p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #3a3020;
+    margin-bottom: 1rem;
+  }
+
+  .system-card {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 4px;
+    padding: 1.5rem;
+  }
+
+  .system-card h3 {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--accent-light);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .system-spec {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #2a2a3e;
+    font-size: 0.82rem;
+  }
+
+  .system-spec:last-child { border-bottom: none; }
+
+  .spec-label { color: #a09080; }
+  .spec-value { color: var(--paper); font-weight: 600; font-family: 'Source Code Pro', monospace; font-size: 0.78rem; }
+
+  /* CHAPTER GRID */
+  .chapter-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--light-rule);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .chapter-heading::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 3px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .chapter-card {
+    background: var(--section-bg);
+    border: 1px solid var(--light-rule);
+    border-radius: 3px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chapter-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .chapter-card:hover {
+    border-color: var(--accent-light);
+    box-shadow: 0 4px 20px rgba(139,69,19,0.1);
+    transform: translateY(-2px);
+  }
+
+  .chapter-card:hover::before { transform: scaleX(1); }
+
+  .chapter-number {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--accent-light);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .chapter-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .chapter-card p {
+    font-size: 0.82rem;
+    color: var(--warm-grey);
+    line-height: 1.5;
+  }
+
+  .chapter-tag {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    font-family: 'Source Code Pro', monospace;
+  }
+
+  .tag-beheer { background: #e8f4e8; color: #2d6a2d; }
+  .tag-admin { background: #fde8e8; color: #8b1a1a; }
+  .tag-technisch { background: #e8eef8; color: #1a3a6b; }
+  .tag-referentie { background: #f0e8f8; color: #4a1a6b; }
+
+  /* KNOWN ISSUES */
+  .issues-section {
+    background: #fff8f5;
+    border: 1px solid #e8c0a0;
+    border-radius: 3px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .issues-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--warning);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .issue-list {
+    list-style: none;
+  }
+
+  .issue-list li {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
+    align-items: start;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e8d0b8;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .issue-list li:last-child { border-bottom: none; }
+
+  .issue-nr {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 600;
+    padding-top: 0.1rem;
+  }
+
+  .issue-status {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    font-family: 'Source Code Pro', monospace;
+    white-space: nowrap;
+  }
+
+  .status-open { background: #fde8e8; color: #8b1a1a; }
+  .status-onderzoek { background: #fef3e2; color: #8b5a00; }
+  .status-gepland { background: #e8eef8; color: #1a3a6b; }
+
+  /* ACTIVE ALARMS */
+  .active-alarms {
+    background: #fff5f5;
+    border: 1px solid #f0b0b0;
+    border-left: 4px solid var(--warning);
+    border-radius: 3px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .active-alarms h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--warning);
+    margin-bottom: 1rem;
+  }
+
+  .alarm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.83rem;
+  }
+
+  .alarm-table th {
+    text-align: left;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-grey);
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid #e8c0c0;
+  }
+
+  .alarm-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid #f5e0e0;
+    vertical-align: top;
+  }
+
+  .alarm-table tr:last-child td { border-bottom: none; }
+
+  .alarm-prio { 
+    font-family: 'Source Code Pro', monospace;
+    font-weight: 600;
+    color: var(--warning);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink);
+    color: #b0a090;
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.78rem;
+    font-family: 'Source Code Pro', monospace;
+    margin-top: 4rem;
+  }
+
+  footer a { color: var(--accent-light); text-decoration: none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .header-inner { grid-template-columns: 1fr; }
+    .header-meta { text-align: left; }
+    .intro-grid { grid-template-columns: 1fr; }
+    .chapters-grid { grid-template-columns: 1fr; }
+    header h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-eyebrow">Menorah Paslaan Apeldoorn — Beheersdocumentatie</div>
+      <h1>Klimaat<span>beheer</span><br>Handleiding</h1>
+      <p class="header-sub">WAGO PFC200 · CODESYS V3.5 · Van Niel Installatietechniek</p>
+    </div>
+    <div class="header-meta">
+      <div>Versie 1.0</div>
+      <div>Mei 2026</div>
+      <div style="margin-top:0.5rem; color:#9a8a7a;">Vertrouwelijk</div>
+      <div>Alleen voor beheerders</div>
+    </div>
+  </div>
+  <div class="header-rule"></div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="active">Home</a>
+    <a href="systeem.html">Systeem</a>
+    <a href="portaal.html">Portaal</a>
+    <a href="klokken.html">Klokken</a>
+    <a href="cv_ketels.html">CV Ketels</a>
+    <a href="ruimtes.html">Ruimtes</a>
+    <a href="io.html">I/O</a>
+    <a href="alarmen.html">Alarmen</a>
+    <a href="dataplotter.html">Dataplotter</a>
+    <a href="verbeteringen.html">Verbeteringen</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- INTRO -->
+  <div class="intro-grid">
+    <div class="intro-text">
+      <h2>Over deze handleiding</h2>
+      <p>Deze handleiding beschrijft het klimaatbeheersysteem van de Menorah gemeente aan de Paslaan in Apeldoorn. Het systeem regelt de verwarming van alle ruimtes in het gebouw via een WAGO PLC en is toegankelijk via een webportaal.</p>
+      <p>De handleiding is bedoeld voor beheerders die zelfstandig stooktijden willen aanpassen, de werking van het systeem willen begrijpen, en problemen willen kunnen diagnosticeren. Sommige instellingen vereisen een admin-login bij Van Niel.</p>
+      <p>De documentatie is opgebouwd op basis van de portaalschermen en wordt aangevuld naarmate er meer kennis wordt opgebouwd via broncode-analyse. Zie <a href="systeem.html" style="color:var(--accent);">Hoofdstuk 1 — Systeem & Portaaltoegang</a> voor een volledig overzicht van het portaal.</p>
+    </div>
+    <div class="system-card">
+      <h3>Systeemspecificaties</h3>
+      <div class="system-spec">
+        <span class="spec-label">PLC</span>
+        <span class="spec-value">WAGO 750-8212</span>
+      </div>
+      <div class="system-spec">
+        <span class="spec-label">Type</span>
+        <span class="spec-value">PFC200 G2 2ETH RS</span>
+      </div>
+      <div class="system-spec">
+        <span class="spec-label">Firmware</span>
+        <span class="spec-value">FW Release 23+</span>
+      </div>
+      <div class="system-spec">
+        <span class="spec-label">Software</span>
+        <span class="spec-value">CODESYS V3.5 SP21</span>
+      </div>
+      <div class="system-spec">
+        <span class="spec-label">Installateur</span>
+        <span class="spec-value">Van Niel BV</span>
+      </div>
+      <div class="system-spec">
+        <span class="spec-label">CV ketels</span>
+        <span class="spec-value">4 (+ 1 doopvont)</span>
+      </div>
+      <div class="system-spec">
+        <span class="spec-label">Ruimtes</span>
+        <span class="spec-value">10</span>
+      </div>
+      <div class="system-spec">
+        <span class="spec-label">EnOcean sensoren</span>
+        <span class="spec-value">8 actief</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAPTERS -->
+  <h2 class="chapter-heading">Hoofdstukken</h2>
+  <div class="chapters-grid">
+
+    <a href="systeem.html" class="chapter-card">
+      <div class="chapter-number">Hoofdstuk 01</div>
+      <h3>Systeembeschrijving</h3>
+      <p>Hardware overzicht, netwerktopologie, CV installaties en gebouwplattegrond met sensoren en actuatoren.</p>
+      <span class="chapter-tag tag-referentie">Referentie</span>
+    </a>
+
+    <a href="portaal.html" class="chapter-card">
+      <div class="chapter-number">Hoofdstuk 02</div>
+      <h3>Toegang tot het portaal</h3>
+      <p>Inloggen via IXON Cloud, navigatie door het bedienpaneel en overzicht van alle beschikbare schermen.</p>
+      <span class="chapter-tag tag-beheer">Beheer</span>
+    </a>
+
+    <a href="klokken.html" class="chapter-card">
+      <div class="chapter-number">Hoofdstuk 03</div>
+      <h3>Klokprogramma's</h3>
+      <p>Stooktijden instellen per ruimte, weekprogramma beheren, extra dagen toevoegen en valkuilen vermijden.</p>
+      <span class="chapter-tag tag-beheer">Beheer</span>
+    </a>
+
+    <a href="cv_ketels.html" class="chapter-card">
+      <div class="chapter-number">Hoofdstuk 04</div>
+      <h3>CV Ketels</h3>
+      <p>Statusoverzicht van de vier ketels, stooklijn configuratie, ruimtetemperatuur instellingen en drukbewaking.</p>
+      <span class="chapter-tag tag-admin">Admin vereist</span>
+    </a>
+
+    <a href="ruimtes.html" class="chapter-card">
+      <div class="chapter-number">Hoofdstuk 05</div>
+      <h3>Ruimteregeling</h3>
+      <p>Comfort setpoints instellen per ruimte, regelstatus bewaken en EnOcean sensor problemen herkennen.</p>
+      <span class="chapter-tag tag-beheer">Beheer</span>
+    </a>
+
+    <a href="io.html" class="chapter-card">
+      <div class="chapter-number">Hoofdstuk 06</div>
+      <h3>I/O Modules</h3>
+      <p>Overzicht van alle analoge en digitale ingangen en uitgangen, sensor mapping en blokkeer functie.</p>
+      <span class="chapter-tag tag-technisch">Technisch</span>
+    </a>
+
+    <a href="alarmen.html" class="chapter-card">
+      <div class="chapter-number">Hoofdstuk 07</div>
+      <h3>Alarmen & Meldingen</h3>
+      <p>Alarmoverzicht, prioriteiten, bevestigen van alarmen en configuratie van e-mail doormelding.</p>
+      <span class="chapter-tag tag-beheer">Beheer</span>
+    </a>
+
+    <a href="dataplotter.html" class="chapter-card">
+      <div class="chapter-number">Hoofdstuk 08</div>
+      <h3>Dataplotter & Diagnose</h3>
+      <p>Historische data analyseren, opwarmgedrag beoordelen en regelingsproblemen diagnosticeren.</p>
+      <span class="chapter-tag tag-technisch">Technisch</span>
+    </a>
+
+    <a href="ontwikkelomgeving.html" class="chapter-card">
+      <div class="chapter-number">Hoofdstuk 09</div>
+      <h3>Ontwikkelomgeving</h3>
+      <p>CODESYS installeren, WAGO device package, verbinding maken met de PLC en code deployen.</p>
+      <span class="chapter-tag tag-technisch">Technisch</span>
+    </a>
+
+  </div>
+
+  <!-- KNOWN ISSUES -->
+  <div class="issues-section">
+    <h2>⚠ Bekende beperkingen & geplande verbeteringen</h2>
+    <ul class="issue-list">
+      <li>
+        <span class="issue-nr">#001</span>
+        <div>
+          <strong style="font-size:0.88rem;">Extra dag overschrijft volledig weekprogramma</strong>
+          <p style="color:#5a4a30; margin-top:0.2rem;">Een actieve entry in "Extra dagen" schakelt het gehele weekprogramma voor die dag uit, ook tijdblokken die niet overlappen. Ochtendprogramma valt weg als er een avondprogramma als extra dag is ingevoerd.</p>
+        </div>
+        <span class="issue-status status-gepland">Gepland</span>
+      </li>
+      <li>
+        <span class="issue-nr">#002</span>
+        <div>
+          <strong style="font-size:0.88rem;">Dag niet automatisch aangevinkt bij extra dag invoer</strong>
+          <p style="color:#5a4a30; margin-top:0.2rem;">Bij het invoeren van een extra dag entry moet de dag van de week handmatig aangevinkt worden, ook al is die af te leiden uit de datum. Vergeten resulteert in geen verwarming.</p>
+        </div>
+        <span class="issue-status status-gepland">Gepland</span>
+      </li>
+      <li>
+        <span class="issue-nr">#003</span>
+        <div>
+          <strong style="font-size:0.88rem;">Ketel start niet bij actief klokprogramma (stookgrens)</strong>
+          <p style="color:#5a4a30; margin-top:0.2rem;">Als het 3-daags gemiddelde van de buitentemperatuur boven 16°C ligt, gaat de ketel niet aan ondanks een actief klokprogramma. Bijzonder problematisch in voor- en najaar bij wisselend weer.</p>
+        </div>
+        <span class="issue-status status-onderzoek">In onderzoek</span>
+      </li>
+      <li>
+        <span class="issue-nr">#004</span>
+        <div>
+          <strong style="font-size:0.88rem;">Bovenzaal: optimizer start te vroeg, setpoint niet bereikt</strong>
+          <p style="color:#5a4a30; margin-top:0.2rem;">Optimizer start 7 uur voor gewenste tijd terwijl 2 uur voldoende is. Ruimte bereikt het comfort setpoint van 20°C niet binnen de gewenste tijd. Energieverspilling door hoge aanvoertemperatuur terwijl kranen worden dichtgeknepen.</p>
+        </div>
+        <span class="issue-status status-onderzoek">In onderzoek</span>
+      </li>
+      <li>
+        <span class="issue-nr">#005</span>
+        <div>
+          <strong style="font-size:0.88rem;">E-mail notificaties werken niet</strong>
+          <p style="color:#5a4a30; margin-top:0.2rem;">Systeem toont "Failed sending network data". Alarm emails en dagelijkse datarapporten worden niet verzonden. Alarmen worden daardoor niet automatisch doorgemeld.</p>
+        </div>
+        <span class="issue-status status-open">Open</span>
+      </li>
+      <li>
+        <span class="issue-nr">#006</span>
+        <div>
+          <strong style="font-size:0.88rem;">Enable Holiday knop heeft geen functie</strong>
+          <p style="color:#5a4a30; margin-top:0.2rem;">De "Enable Holiday" knop op het Klokken scherm is niet functioneel en kan verwarring wekken. Wordt verwijderd in een toekomstige update.</p>
+        </div>
+        <span class="issue-status status-gepland">Gepland</span>
+      </li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  Menorah Gemeente Apeldoorn — Klimaatbeheer Handleiding v1.0 — Mei 2026<br>
+  <span style="color:#9a8a7a;">Vertrouwelijk document — uitsluitend bestemd voor beheerders</span>
+</footer>
+
+</body>
+</html>
