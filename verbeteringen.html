@@ -194,6 +194,30 @@
     <span class="issue-status status-gepland">Gepland</span>
   </div>
 
+  <h2 class="section-title">Regelaar optimalisaties (na broncode-analyse)</h2>
+
+  <div class="issue-card">
+    <span class="issue-nr">#007</span>
+    <div>
+      <span class="category-label cat-config">Configuratie</span>
+      <div class="issue-title">I-tijd Verwarmen staat op 0 bij Jeugdzolder — setpoint wordt niet bereikt</div>
+      <div class="issue-desc">Bij de Jeugdzolder (Ketel 4) staat I-tijd Verwarmen op 0 seconden. Dit schakelt de integratorwerking van de PI-regelaar effectief uit. Zonder I-actie "drukt" de regelaar niet door voor de laatste graden: de radiatorkraan knijpt proportioneel dicht zodra het setpoint nadert, maar bij onvoldoende vermogen ontstaat een blijvende fout — de ruimte blijft steken onder het setpoint (bijv. 18.2°C terwijl setpoint 19.6°C is).</div>
+      <div class="issue-solution"><strong>Gewenste aanpassing:</strong> I-tijd Verwarmen instellen op 300–600 seconden als startpunt. Bij te trage reactie verlagen naar 300s, bij pendelen verhogen naar 900–1200s. Eerst broncode-analyse om te bevestigen hoe deze parameter exact werkt in de regellogica.</div>
+    </div>
+    <span class="issue-status status-onderzoek">In onderzoek</span>
+  </div>
+
+  <div class="issue-card">
+    <span class="issue-nr">#008</span>
+    <div>
+      <span class="category-label cat-config">Configuratie</span>
+      <div class="issue-title">Ruimtecompensatie niet afgestemd op ruimtetype</div>
+      <div class="issue-desc">De ruimtecompensatie factor bepaalt hoeveel de aanvoertemperatuur wordt bijgestuurd per graad afwijking van de ruimtetemperatuur. Grote ruimtes (Grote Zaal, Bovenzaal, Jeugdzolder) hebben een hoge thermische massa en warmen traag op — een hoge ruimtecompensatie werkt hier averechts: de regeling denkt dat de ruimte snel genoeg opwarmt en knijpt de kranen te vroeg dicht. Kleine ruimtes (kantoren, kinderruimten) reageren sneller en kunnen een hogere compensatie verdragen.</div>
+      <div class="issue-solution"><strong>Gewenste aanpassing:</strong> Ruimtecompensatie voor grote ruimtes verlagen naar 2–3°C/°C. Voor kantoren en kinderruimten kan de huidige instelling gehandhaafd worden. Exacte afstemming na broncode-analyse en dataplotter verificatie per ruimte.</div>
+    </div>
+    <span class="issue-status status-onderzoek">In onderzoek</span>
+  </div>
+
   <h2 class="section-title">Nader te onderzoeken</h2>
 
   <div class="issue-card">
